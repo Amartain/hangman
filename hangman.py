@@ -1,7 +1,10 @@
 import random
 
-#változók
+#welcome text
+print("Welcome to our game! ")
+print("Remember, you can only guess by writing full words 3 times incorrectly, so use these wisely.")
 
+#változók
 correctg=[] #helyes tippek
 incorrectg=[] #helytelen tippek
 acsik=[]
@@ -21,28 +24,38 @@ for elem in acsik:
     print(elem, end=" ")
 print("\n")
 
+guess=0
+
 #találgatás
 while True:
     if "_" in acsik:
         #felhasználótól bekért betű > csere az acsikban
-        uin=input("Guess a letter: ")
+        uin=input("Guess a letter or the whole word: ")
         #a játékos beírja a megoldást
         if uin==solution:
             print("Congrats! You have found the solution!")
             break
         if len(uin)>1 and uin!=solution:
-            print("Wrong tipp!")
+            print("Wrong guess!")
+            guess+=1
+        if guess==3:
+            print("You haven't got more chance.")
+            break
         #hosszáadja a megfelelő listához
-        if uin in solution:
-            correctg.append(uin)
+        if uin not in correctg and uin not in incorrectg:
+            if uin in solution:
+                correctg.append(uin)
+            else:
+                incorrectg.append(uin)
         else:
-            incorrectg.append(uin)
+            print("You have already tried this letter.")
         print("Correct guesses:")
         for elem in correctg:
             print(elem, end="\t")
         print("\nIncorrect guesses:")
         for elem in incorrectg:
             print(elem, end="\t")
+
 
         #a felhasználó tippje hanyadik betű a megoldásban
         corpl=[] #a betű indexeinek tárolása
